@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haut.grain.dao.BaseBeanDao">
+	<resultMap type="BaseBean" id="baseBeanMap">
+		<id column="id" property="id" />
+		<result column="area" property="area" />
+		<result column="amount" property="amount" />
+		<result column="year" property="year" />
+		<result column="description" property="description"/>
+	</resultMap>
+	<insert id="add" parameterType="BaseBean">
+	insert into ${table}(area,amount,year,description) values(#{area},#{amount},#{year},#{description})
+	
+	</insert>
+	<select id="queryAmount" resultType="Double">
+	select amount from ${table} where area=#{area}
+	</select>
+		<select id="queryYear" resultType="Integer">
+	select year from ${table} where area=#{area}
+	</select>
+</mapper>

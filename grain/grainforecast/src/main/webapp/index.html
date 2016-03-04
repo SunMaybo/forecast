@@ -1,0 +1,1063 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="renderer" content="webkit">
+<title></title>
+<link rel="stylesheet" href="http://www.pintuer.com/css/pintuer.css">
+<link rel="stylesheet" href="css/admin.css">
+<script src="http://www.pintuer.com/js/jquery.js"></script>
+<script src="http://www.pintuer.com/js/pintuer.js"></script>
+<script src="http://www.pintuer.com/js/respond.js"></script>
+<script src="js/admin.js"></script>
+<!--Step:2 Import echarts.js-->
+<!--Step:2 引入echarts.js-->
+<script src="./js/echarts.js"></script>
+<style type="text/css">
+body {
+position:absolute;
+background-color:#000;
+top: 0px;
+left: 0px;
+right: 0px;
+bottom: 0px;
+background-color:white;
+margin: 0px;
+ padding: 0px;
+  width: 100%; 
+  height: 100%;
+}
+</style>
+</head>
+
+<body>
+	<div class="layout bg-black bg-inverse hidden-l">
+		<div class="container-layout height-big">
+			<span class="float-right"><a href="#">注册</a> <span
+				class="text-little text-gray">|</span> <a href="#">登录</a> <span
+				class="text-little text-gray">|</span> <a href="#">联系</a> </span>欢迎使用粮食产量分析系统
+		</div>
+	</div>
+	<div
+		class="container-layout padding-small-top padding-small-bottom bg-green bg-inverse">
+		<div class=" line">
+			<div class="xl12 xs2 xm2 xb1">
+				<img src="logo.jpg" style="height: 30px; width: 30px;" />
+			</div>
+			<div class=" xl12 xs10 xm10 xb11 padding-top nav-navicon"
+				id="header-demo4">
+				<div class="xs8 xm8 xb6  padding-bottom" style="margin-bottom: -20px;margin-left: 10%;">
+					<div class="bg-green bg-inverse radius nav-navicon" id="nav-bg3">
+						<ul class="nav nav-inline nav-menu nav-split nav-justified">
+							<li id="menu_1" style="background-color: #7FFF00;"><a href="#" onclick="menuSelect(1)">产量</a></li>
+							<li id="menu_2"><a href="#" onclick="menuSelect(2)">消费量</a></li>
+							<li id="menu_3"><a href="#" onclick="menuSelect(3)">储备量</a></li>
+						</ul>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<div
+		class="container-layout bg bg-green padding-small-top padding-small-bottom margin-left"
+		style="height: 100%;margin-left: -10px;margin-bottom: -5px;margin-right: -10px;">
+		<div class="x2 padding-big-bottom bg-sub " style="margin-right:-1px;height: 100%;border-right:3px solid #7FFF00;border-left:3px solid #7FFF00;border-bottom:3px solid #7FFF00;border-top:3px solid #7FFF00;"
+			>
+			<div class="list-link bg-sub" style="margin-top: 1px;">
+				<div class="active bg-sub" id="CN"
+					style="border-right: 3px solid blue;margin-right: -3px;">
+					<a onclick="areaClick(1)" style="cursor: pointer;">
+						<div
+							class="shake-hover text-center padding-big-top padding-big-bottom">
+							<span><img src="China.ico" alt=""></span> 全国
+						</div>
+					</a>
+				</div>
+				<div class="active bg-sub" id="HN">
+
+					<a>
+						<div
+							class="shake-hover text-center padding-big-top padding-big-bottom"
+							onclick="areaClick(2)" style="cursor: pointer;">
+							<span><img src="china_area.ico" alt=""></span> 区域
+						</div>
+					</a>
+				</div>
+			</div>
+			<div class="alert margin-big-top" style="height: 66%;">
+				<span class="close rotate-hover"></span><strong>提示：</strong>这里提供描述。
+			</div>
+		</div>
+		<div class="x10" style="height: 100%;border-top:3px solid #7FFF00;">
+
+
+			<div class="panel" style="height: 100%;">
+				<div class="panel-body margin-top margin-bottom">
+					<div class="line">
+						<div class="x3">
+							<div class="form-group">
+								<div class="label">
+									<strong>粮食类型</strong>
+								</div>
+								<div class="field">
+									<label> <input id="zuoWu" name="zuoWu" type="radio">粮食
+									</label> <label> <input id="yuMi" name="zuoWu" type="radio">玉米
+									</label> <label> <input id="xiaoMai" name="zuoWu" type="radio">小麦
+									</label> <label> <input id="daoGu" name="zuoWu" type="radio">稻谷
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="x3">
+							<div class="form-group">
+								<div class="label">
+									<strong>预测期限</strong>
+								</div>
+								<div class="field">
+									<label> <input name="longTime" id="shortTime"
+										type="radio">中短期
+									</label> <label> <input name="longTime" id="longTime"
+										type="radio">中长期
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="x3">
+							<div class="form-group">
+								<div class="label">
+									<strong>取最近几年数据</strong>
+								</div>
+								<div class="field">
+									<label> <input
+										style="width: 80px; text-align: center;" type="text"
+										value="10" class="input" name="m" id="m" size="30"
+										placeholder="所需数据" />
+									</label>
+
+								</div>
+							</div>
+						</div>
+						<div class="x3">
+							<div class="form-group">
+								<div class="label">
+									<strong>输入年数</strong>
+								</div>
+								<div class="field">
+									<div class="input-group" style="width: 150px;">
+										<span class="addbtn">
+											<button type="button" class="button icon-search"></button>
+										</span> <input type="text" class="input" style="text-align: center;"
+											name="year" id="year" size="30" placeholder="预测年数" /> <span
+											class="addbtn">
+											<button type="button" class="button" onclick="predictClick()">
+												确认</button>
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<hr class="bg-main " />
+					<div class="banner" data-pointer="1" data-interval="10"
+						data-item="1" data-style="border-red" style="width: 99%;height: 85%;text-align: center;margin-top: 5px;">
+						<ul class="carousel" id="carouselMain">
+							<li class="item">
+								<div id="main"
+									style="height:450px;width: 100%; border: 1px solid #ccc; padding: 10px;"></div>
+							</li>
+							<li class="item">
+								<div id="main1"
+									style="height:450px;width: 100%; border: 1px solid #ccc; padding: 10px;"></div>
+							</li>
+							<li class="item">
+								<div id="main2"
+									style="height:450px;width: 100%; border: 1px solid #ccc; padding: 10px;"></div>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+	<div
+		class="container-layout bg-gray bg-inverse padding-big-top padding-big-bottom" style="margin-bottom: 2px;">
+		<div class="text-center">版权所有 © 河南工业大学信息科学与工程学院</div>
+	</div>
+	<script type="text/javascript">
+		var menu = 0;
+		var area = 'CN';
+		var year;
+		$(document).ready(function() {
+			menu = 1;
+			area = "CN";
+			year = 8;
+			zuoWu = 1;
+			$('.active').attr('class', 'active bg-sub');
+			$('#CN').attr('class', 'active bg');
+			document.getElementById("zuoWu").checked = true;
+			document.getElementById("longTime").checked = true;
+			$('#year').val(year);
+			predictClick();
+		});
+		// Step:3 conifg ECharts's path, link to echarts.js from current page.
+		// Step:3 为模块加载器配置echarts的路径，从当前页面链接到echarts.js，定义所需图表路径
+		require.config({
+			paths : {
+				echarts : './js'
+			}
+		});
+
+		// Step:4 require echarts and use it in the callback.
+		// Step:4 动态加载echarts然后在回调函数中开始使用，注意保持按需加载结构定义图表路径
+		/*  $(document).ready(
+		 function() {
+		
+		 bar(null);
+		 });  */
+		// bar(null);
+		function bar(data) {
+
+			require([ 'echarts', 'echarts/chart/bar', 'echarts/chart/line',
+			//'echarts/chart/map'
+			], function(ec) {
+
+				//--- 折柱 ---
+				var myChart = ec.init(document.getElementById('main'));
+				var myChart1 = ec.init(document.getElementById('main1'));
+				var myChart2 = ec.init(document.getElementById('main2'));
+				myChart.setOption({
+					tooltip : {
+						trigger : 'axis'
+					},
+					legend : {
+						data : [ '年度实际产量', '灰色预测年度产量', '多元预测年度产量',
+								'多元预测+残差修正年度产量' ]
+					},
+					toolbox : {
+						show : true,
+						feature : {
+							mark : {
+								show : true
+							},
+							dataView : {
+								show : true,
+								readOnly : false
+							},
+							magicType : {
+								show : true,
+								type : [ 'line', 'bar','stack', 'tiled' ]
+							},
+							restore : {
+								show : true
+							},
+							saveAsImage : {
+								show : true
+							}
+						}
+					},
+					calculable : true,
+					xAxis : [ {
+						type : 'category',
+						 axisLabel : {
+				                formatter: '{value} 年'
+				            },
+						data : data.years
+					} ],
+					yAxis : [ {
+						type : 'value',
+						 axisLabel : {
+				                formatter: '{value} 万吨'
+				            },
+						splitArea : {
+							show : true
+						}
+					} ],
+					series : [ {
+						name : '年度实际产量',
+						type : 'bar',
+						 itemStyle: {normal: {label:{show:true}}},
+						data : data.cls
+					},
+					/* 	private List<Integer> years;//年份
+						private List<Double>cls;//产量
+						private List<Double>clshsyc;//产量灰色预测
+						private List<Double>clsdyyc;//产量多元预测
+						private List<Double>clsdyycxz;//产量多元预测修正
+						private List<Double>clshsycre;//产量灰色预测误差
+						private List<Double>clsdyycre;//产量多元预测误差
+						private List<Double>clsdyycxzre;//多元预测修正误差
+						private double clshsycme;//产量预测平均误差
+						private double clsdyycme;// 多元预测平均误差 */
+					{
+						name : '灰色预测年度产量',
+						type : 'bar',
+						 itemStyle: {normal: {label:{show:true}}},
+						data : data.clshsyc
+					}, {
+						name : '多元预测年度产量',
+						type : 'bar',
+						 itemStyle: {normal: {label:{show:true}}},
+						data : data.clsdyyc
+					}, {
+						name : '多元预测+残差修正年度产量',
+						type : 'bar',
+						 itemStyle: {normal: {label:{show:true}}},
+						data : data.clsdyycxz
+					}, ]
+				});
+				myChart1.setOption({
+					tooltip : {
+						trigger : 'axis'
+					},
+					legend : {
+						data : [ '灰色预测年度预测相对误差', '多元预测年度预测相对误差',
+								'多元预测+残差修正年度预测相对误差' ]
+					},
+					toolbox : {
+						show : true,
+						feature : {
+							mark : {
+								show : true
+							},
+							dataView : {
+								show : true,
+								readOnly : false
+							},
+							magicType : {
+								show : true,
+								type : [ 'line', 'bar','stack', 'tiled' ]
+							},
+							restore : {
+								show : true
+							},
+							saveAsImage : {
+								show : true
+							}
+						}
+					},
+					calculable : true,
+					xAxis : [ {
+						type : 'category',
+						 axisLabel : {
+				                formatter: '{value} 年'
+				            },
+						data : data.years
+					} ],
+					yAxis : [ {
+						type : 'value',
+						 axisLabel : {
+				                formatter: '{value} 万吨'
+				            },
+						splitArea : {
+							show : true
+						}
+					} ],
+					series : [ {
+						name : '灰色预测年度预测相对误差',
+						type : 'bar',
+						 itemStyle: {normal: {label:{show:true}}},
+						data : data.clshsycre
+					},
+					/* 	private List<Integer> years;//年份
+						private List<Double>cls;//产量
+						private List<Double>clshsyc;//产量灰色预测
+						private List<Double>clsdyyc;//产量多元预测
+						private List<Double>clsdyycxz;//产量多元预测修正
+						private List<Double>clshsycre;//产量灰色预测误差
+						private List<Double>clsdyycre;//产量多元预测误差
+						private List<Double>clsdyycxzre;//多元预测修正误差
+						private double clshsycme;//产量预测平均误差
+						private double clsdyycme;// 多元预测平均误差 */
+					{
+						name : '多元预测年度预测相对误差',
+						type : 'bar',
+						 itemStyle: {normal: {label:{show:true}}},
+						data : data.clsdyycre
+					}, {
+						name : '多元预测+残差修正年度预测相对误差',
+						type : 'bar',
+						 itemStyle: {normal: {label:{show:true}}},
+						data : data.clsdyycxzre
+					} ]
+				});
+				myChart2.setOption({
+					tooltip : {
+						trigger : 'axis'
+					},
+					legend : {
+						data : [ '灰色预测年度预测平均相对误差', '多元预测年度预测平均相对误差',
+								'多元预测+残差修正年度预测年度平均相对误差' ]
+					},
+					toolbox : {
+						show : true,
+						feature : {
+							mark : {
+								show : true
+							},
+							dataView : {
+								show : true,
+								readOnly : false
+							},
+							magicType : {
+								show : true,
+								type : [ 'line', 'bar','stack', 'tiled' ]
+							},
+							restore : {
+								show : true
+							},
+							saveAsImage : {
+								show : true
+							}
+						}
+					},
+					calculable : true,
+					xAxis : [ {
+						type : 'category',
+						data : [ year + '年平均' ]
+					} ],
+					yAxis : [ {
+						type : 'value',
+						 axisLabel : {
+				                formatter: '{value} 万吨'
+				            },
+						splitArea : {
+							show : true
+						}
+					} ],
+					series : [ {
+						name : '灰色预测年度预测平均相对误差',
+						type : 'bar',
+						 itemStyle: {normal: {label:{show:true}}},
+						data : [ data.clshsycme ]
+					},
+					/* 	private List<Integer> years;//年份
+						private List<Double>cls;//产量
+						private List<Double>clshsyc;//产量灰色预测
+						private List<Double>clsdyyc;//产量多元预测
+						private List<Double>clsdyycxz;//产量多元预测修正
+						private List<Double>clshsycre;//产量灰色预测误差
+						private List<Double>clsdyycre;//产量多元预测误差
+						private List<Double>clsdyycxzre;//多元预测修正误差
+						private double clshsycme;//产量预测平均误差
+						private double clsdyycme;// 多元预测平均误差 */
+					{
+						name : '多元预测年度预测平均相对误差',
+						type : 'bar',
+						 itemStyle: {normal: {label:{show:true}}},
+						data : [ data.clsdyycme ]
+					}, {
+						name : '多元预测+残差修正年度预测年度平均相对误差',
+						type : 'bar',
+						 itemStyle: {normal: {label:{show:true}}},
+						data : [ data.clsdyycxzme ]
+					} ]
+				});
+			});
+		}
+		function menuSelect(v) {
+			menu = v;
+			if(v==1){
+				$('#menu_1').attr("style","background-color: #7FFF00;");
+				$('#menu_3').attr("style","");
+				$('#menu_2').attr("style","");
+				chanLiang();
+			}
+			if(v==3){
+				$('#menu_3').attr("style","background-color: #7FFF00;");
+				$('#menu_1').attr("style","");
+				$('#menu_2').attr("style","");
+				chuLiang();
+			}if(v==2){
+				$('#menu_2').attr("style","background-color: #7FFF00;");
+				$('#menu_3').attr("style","");
+				$('#menu_1').attr("style","");
+			}
+		}
+		function areaClick(v) {
+			if (v == 1) {
+				area = 'CN';
+				$('.active').attr('class', 'active bg-sub');
+				$('#CN').attr('class', 'active bg');
+				$('#HN').attr("style", '');
+				$('#CN').attr('style', 'border-right:3px solid blue;margin-right: -3px;');
+			}
+			if (v == 2) {
+				
+				area = 'HN';
+				$('.active').attr('class', 'active bg-sub');
+				$('#HN').attr('class', 'active bg');
+				$('#CN').attr("style", '');
+				$('#HN').attr('style', 'border-right:3px solid blue;margin-right: -3px;');
+			}
+		}
+		function predictClick() {
+			switch (menu) {
+			case 1:
+				menu = 1;
+				chanLiang();
+				break;
+			case 2:
+				menu = 2;
+				break;
+			case 3:
+				menu = 3;
+				chuLiang();
+				break;
+			}
+		}
+		function chuLiang(){
+			year = 8;
+			var yuMi = 0;
+			var xiaoMai = 0;
+			var zuoWu = 0;
+			var daoGu = 0;
+			var longTime = 0;
+			var shortTime = 0;
+			var m = 10;
+			m = $('#m').val();
+			if (isNumber(m) && m >= 5) {
+
+			} else {
+				alert('请输入正确的年数');
+				return;
+			}
+			if (document.getElementById("yuMi").checked) {
+				yuMi = 1;
+			}
+			if (document.getElementById("daoGu").checked) {
+				daoGu = 1;
+			}
+			if (document.getElementById("zuoWu").checked) {
+				zuoWu = 1;
+			}
+			if (document.getElementById("xiaoMai").checked) {
+				xiaoMai = 1;
+			}
+			if (document.getElementById("longTime").checked) {
+				longTime = 1;
+				if (isNumber($('#year').val())) {
+					year = $('#year').val();
+					if (year < 5) {
+						alert('长期预测必须大于5年。');
+						return;
+					}
+				} else {
+					alert('请输入数字');
+					return;
+				}
+			}
+			if (document.getElementById("shortTime").checked) {
+				shortTime = 1;
+				if (isNumber($('#year').val())) {
+					year = $('#year').val();
+					if (year > 5) {
+						alert('短期预测必须小于等于5年。');
+						return;
+					}
+				} else {
+					alert('请输入数字');
+					return;
+				}
+			}
+			if (isNumber($('#year').val())) {
+				year = $('#year').val();
+			} else {
+				alert('请输入数字');
+				return;
+			}
+			var param = {
+				yuMi : yuMi,
+				xiaoMai : xiaoMai,
+				zuoWu : zuoWu,
+				daoGu : daoGu,
+				longTime : longTime,
+				shortTime : shortTime,
+				year : year,
+				area : area,
+				m : m
+			};
+			$.ajax({
+				type : 'POST',
+				url : "./grain/chuliang",
+				data : param,
+				success : function(data) {
+			
+					chuliangBar(data);
+				},
+				error : function() {
+
+				}
+			});
+		}
+		function chuliangBar(data){
+			require([ 'echarts', 'echarts/chart/bar', 'echarts/chart/line',
+						//'echarts/chart/map'
+						], function(ec) {
+							//--- 折柱 ---
+							var myChart = ec.init(document.getElementById('main'));
+							var myChart1 = ec.init(document.getElementById('main1'));
+							var myChart2 = ec.init(document.getElementById('main2'));
+							myChart.setOption({
+								tooltip : {
+									trigger : 'axis'
+								},
+								 title : {
+								        text: data[0].year+'储量预测',
+								        subtext: data[0].suanFa+'预测产量'
+								    },
+								legend : {
+							        x : 'right',
+									data : [ '全额最低存储量', '全额储量', '全额最高存储量','差额最低存储量', '差额储量', '差额最高存储量','比例最低存储量', '比例储量', '比例最高存储量']
+								},
+								toolbox : {
+									show : true,
+									   orient: 'vertical',
+								        x: 'right',
+								        y: 'center',
+									feature : {
+										mark : {
+											show : true
+										},
+										dataView : {
+											show : true,
+											readOnly : false
+										},
+										magicType : {
+											show : true,
+											type : [ 'line', 'bar','stack', 'tiled' ]
+										},
+										restore : {
+											show : true
+										},
+										saveAsImage : {
+											show : true
+										}
+									}
+								},
+								calculable : true,
+								xAxis : [ {
+									type : 'category',
+									data : [0.9500,0.9600,0.9700,0.9800,0.9900,1.0000]
+								} ],
+								yAxis : [ {
+									type : 'value',
+									 axisLabel : {
+							                formatter: '{value} 万吨'
+							            },
+									splitArea : {
+										show : true
+									}
+								} ],
+								series : [ {
+									name : '全额最低存储量',
+									type : 'bar',
+									stack: 'min',
+									 itemStyle: {normal: {label:{show:true}}},
+									data : data[0].quanMin
+								},
+								
+								{
+									name : '全额储量',
+									type : 'bar',
+									stack: 'all',
+									 itemStyle: {normal: {label:{show:true}}},
+									data : data[0].quan
+								}, {
+									name : '全额最高存储量',
+									type : 'bar',
+									stack: 'max',
+									 itemStyle: {normal: {label:{show:true}}},
+									data : data[0].quanMax
+								},
+								 {
+									name : '差额最低存储量',
+									type : 'bar',
+									stack: 'min',
+									 itemStyle: {normal: {label:{show:true}}},
+									data : data[0].chaMin
+								},
+								
+								{
+									name : '差额储量',
+									type : 'bar',
+									stack: 'all',
+									 itemStyle: {normal: {label:{show:true}}},
+									data : data[0].cha
+								}, {
+									name : '差额最高存储量',
+									type : 'bar',
+									stack: 'max',
+									 itemStyle: {normal: {label:{show:true}}},
+									data : data[0].chaMax
+								},
+								 {
+									name : '比例最低存储量',
+									type : 'bar',
+									 itemStyle: {normal: {label:{show:true}}},
+									stack: 'min',
+									data : data[0].biliMin
+								},
+								
+								{
+									name : '比例储量',
+									type : 'bar',
+									stack: 'all',
+									 itemStyle: {normal: {label:{show:true}}},
+									data : data[0].bili
+								}, {
+									name : '比例最高存储量',
+									type : 'bar',
+									 itemStyle: {normal: {label:{show:true}}},
+									stack: 'max',
+									data : data[0].biliMax
+								},]
+							});
+							myChart1.setOption({
+								tooltip : {
+									trigger : 'axis'
+								},
+								 title : {
+								        text: data[1].year+'储量预测',
+								        subtext: data[1].suanFa+'预测产量'
+								    },
+								legend : {
+									x:'right',
+									data : [ '全额最低存储量', '全额储量', '全额最高存储量','差额最低存储量', '差额储量', '差额最高存储量','比例最低存储量', '比例储量', '比例最高存储量' ]
+								},
+								toolbox : {
+									show : true,
+									   orient: 'vertical',
+								        x: 'right',
+								        y: 'center',
+									feature : {
+										mark : {
+											show : true
+										},
+										dataView : {
+											show : true,
+											readOnly : false
+										},
+										magicType : {
+											show : true,
+											type : [ 'line', 'bar','stack', 'tiled' ]
+										},
+										restore : {
+											show : true
+										},
+										saveAsImage : {
+											show : true
+										}
+									}
+								},
+								calculable : true,
+								xAxis : [ {
+									type : 'category',
+									data : [0.9500,0.9600,0.9700,0.9800,0.9900,1.0000]
+								} ],
+								yAxis : [ {
+									type : 'value',
+									 axisLabel : {
+							                formatter: '{value} 万吨'
+							            },
+									splitArea : {
+										show : true
+									}
+								} ],
+								series : [  {
+									name : '全额最低存储量',
+									type : 'bar',
+									stack: 'min',
+									 itemStyle: {normal: {label:{show:true}}},
+									data : data[1].quanMin
+								},
+								
+								{
+									name : '全额储量',
+									type : 'bar',
+									stack: 'all',
+									 itemStyle: {normal: {label:{show:true}}},
+									data : data[1].quan
+								}, {
+									name : '全额最高存储量',
+									type : 'bar',
+									stack: 'max',
+									 itemStyle: {normal: {label:{show:true}}},
+									data : data[1].quanMax
+								},
+								 {
+									name : '差额最低存储量',
+									type : 'bar',
+									stack: 'min',
+									 itemStyle: {normal: {label:{show:true}}},
+									data : data[1].chaMin
+								},
+								
+								{
+									name : '差额储量',
+									type : 'bar',
+									stack: 'all',
+									 itemStyle: {normal: {label:{show:true}}},
+									data : data[1].cha
+								}, {
+									name : '差额最高存储量',
+									type : 'bar',
+									stack: 'max',
+									 itemStyle: {normal: {label:{show:true}}},
+									data : data[1].chaMax
+								},
+								 {
+									name : '比例最低存储量',
+									type : 'bar',
+									 itemStyle: {normal: {label:{show:true}}},
+									stack: 'min',
+									data : data[1].biliMin
+								},
+								
+								{
+									name : '比例储量',
+									type : 'bar',
+									 itemStyle: {normal: {label:{show:true}}},
+									stack: 'all',
+									data : data[1].bili
+								}, {
+									name : '比例最高存储量',
+									type : 'bar',
+									 itemStyle: {normal: {label:{show:true}}},
+									stack: 'max',
+									data : data[1].biliMax
+								}, ]
+							});
+							myChart2.setOption({
+								tooltip : {
+									trigger : 'axis'
+								},
+								 title : {
+								        text: data[2].year+'储量预测',
+								        subtext: data[2].suanFa+'预测产量'
+								    },
+								legend : {
+									x:'right',
+									data : ['全额最低存储量', '全额储量', '全额最高存储量','差额最低存储量', '差额储量', '差额最高存储量','比例最低存储量', '比例储量', '比例最高存储量']
+								},
+								toolbox : {
+									show : true,
+									   orient: 'vertical',
+								        x: 'right',
+								        y: 'center',
+									feature : {
+										mark : {
+											show : true
+										},
+										dataView : {
+											show : true,
+											readOnly : false
+										},
+										magicType : {
+											show : true,
+											type : [ 'line', 'bar','stack', 'tiled' ]
+										},
+										restore : {
+											show : true
+										},
+										saveAsImage : {
+											show : true
+										}
+									}
+								},
+								calculable : true,
+								xAxis : [ {
+									type : 'category',
+									data : [0.9500,0.9600,0.9700,0.9800,0.9900,1.0000]
+								} ],
+								yAxis : [ {
+									type : 'value',
+									 axisLabel : {
+							                formatter: '{value} 万吨'
+							            },
+									splitArea : {
+										show : true
+									}
+								} ],
+								series : [  {
+									name : '全额最低存储量',
+									type : 'bar',
+									 itemStyle: {normal: {label:{show:true}}},
+									stack: 'min',
+									data : data[2].quanMin
+								},
+								
+								{
+									name : '全额储量',
+									type : 'bar',
+									stack: '',
+									 itemStyle: {normal: {label:{show:true}}},
+									data : data[2].quan
+								}, {
+									name : '全额最高存储量',
+									type : 'bar',
+									stack: 'max',
+									 itemStyle: {normal: {label:{show:true}}},
+									data : data[2].quanMax
+								},
+								 {
+									name : '差额最低存储量',
+									type : 'bar',
+									 itemStyle: {normal: {label:{show:true}}},
+									stack: 'min',
+									data : data[2].chaMin
+								},
+								
+								{
+									name : '差额储量',
+									type : 'bar',
+									stack: 'all',
+									 itemStyle: {normal: {label:{show:true}}},
+									data : data[2].cha
+								}, {
+									name : '差额最高存储量',
+									type : 'bar',
+									stack: 'max',
+									 itemStyle: {normal: {label:{show:true}}},
+									data : data[2].chaMax
+								},
+								 {
+									name : '比例最低存储量',
+									type : 'bar',
+									stack: 'min',
+									 itemStyle: {normal: {label:{show:true}}},
+									data : data[2].biliMin
+								},
+								
+								{
+									name : '比例储量',
+									type : 'bar',
+									stack: 'all',
+									 itemStyle: {normal: {label:{show:true}}},
+									data : data[2].bili
+								}, {
+									name : '比例最高存储量',
+									type : 'bar',
+									stack: 'max',
+									 itemStyle: {normal: {label:{show:true}}},
+									data : data[2].biliMax
+								},]
+							});
+							
+							
+							
+							
+						});
+		}
+		function chanLiang() {
+			year = 8;
+			var yuMi = 0;
+			var xiaoMai = 0;
+			var zuoWu = 0;
+			var daoGu = 0;
+			var longTime = 0;
+			var shortTime = 0;
+			var m = 10;
+			m = $('#m').val();
+			if (isNumber(m) && m >= 5) {
+
+			} else {
+				alert('请输入正确的年数');
+				return;
+			}
+			if (document.getElementById("yuMi").checked) {
+				yuMi = 1;
+			}
+			if (document.getElementById("daoGu").checked) {
+				daoGu = 1;
+			}
+			if (document.getElementById("zuoWu").checked) {
+				zuoWu = 1;
+			}
+			if (document.getElementById("xiaoMai").checked) {
+				xiaoMai = 1;
+			}
+			if (document.getElementById("longTime").checked) {
+				longTime = 1;
+				if (isNumber($('#year').val())) {
+					year = $('#year').val();
+					if (year < 5) {
+						alert('长期预测必须大于5年。');
+						return;
+					}
+				} else {
+					alert('请输入数字');
+					return;
+				}
+			}
+			if (document.getElementById("shortTime").checked) {
+				shortTime = 1;
+				if (isNumber($('#year').val())) {
+					year = $('#year').val();
+					if (year > 5) {
+						alert('短期预测必须小于等于5年。');
+						return;
+					}
+				} else {
+					alert('请输入数字');
+					return;
+				}
+			}
+			if (isNumber($('#year').val())) {
+				year = $('#year').val();
+			} else {
+				alert('请输入数字');
+				return;
+			}
+			var param = {
+				yuMi : yuMi,
+				xiaoMai : xiaoMai,
+				zuoWu : zuoWu,
+				daoGu : daoGu,
+				longTime : longTime,
+				shortTime : shortTime,
+				year : year,
+				area : area,
+				m : m
+			};
+			$.ajax({
+				type : 'POST',
+				url : "./grain/predict",
+				data : param,
+				success : function(data) {
+
+					/* for(i=0;i<data.years.length;i++){
+						alert(data.years[i]);
+					} */
+					bar(data[0]);
+				},
+				error : function() {
+
+				}
+			});
+		}
+		function isNumber(oNum) {
+			if (!oNum)
+				return false;
+			var strP = /^\d+(\.\d+)?$/;
+			if (!strP.test(oNum))
+				return false;
+			try {
+				if (parseFloat(oNum) != oNum)
+					return false;
+			} catch (ex) {
+				return false;
+			}
+			return true;
+		}
+	</script>
+</body>
+
+</html>
